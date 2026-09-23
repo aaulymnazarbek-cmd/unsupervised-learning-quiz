@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Unsupervised Learning Quiz</title>
+<style>
+body{font-family:Arial,sans-serif;background:linear-gradient(135deg,#111936,#3b2b78);color:#fff;margin:0;padding:30px}
+.container{max-width:850px;margin:auto;background:#171f42;padding:30px;border-radius:22px;box-shadow:0 15px 50px #0006}
+h1{text-align:center;color:#8ef0c2}.sub{text-align:center;color:#bbc5e8}
+.q{margin:24px 0;padding:20px;background:#202a52;border-radius:16px}
+button{display:block;width:100%;margin:10px 0;padding:13px;border:0;border-radius:10px;background:#303d70;color:white;text-align:left;cursor:pointer}
+button:hover{background:#46578f}.selected{background:#6655d9!important}.correct{background:#15966a!important}.wrong{background:#a83e59!important}
+#submit{background:#8ef0c2;color:#10162f;text-align:center;font-weight:bold;font-size:17px;margin-top:25px}
+#result{text-align:center;font-size:24px;margin-top:25px;color:#8ef0c2}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>UNSUPERVISED LEARNING</h1>
+<p class="sub">15-question interactive quiz</p>
+<div id="quiz"></div>
+<button id="submit">SUBMIT QUIZ</button>
+<div id="result"></div>
+</div>
+<script>
+const questions=[
+["What is Unsupervised Learning?",["Learning from unlabeled data","Learning only from labeled data","Learning without computers","Learning from exams"],0],
+["What can an unsupervised algorithm find?",["Patterns and similarities","Only correct answers","Only labels","Only numbers"],0],
+["Which is a main type of Unsupervised Learning?",["Clustering","Classification","Supervised Regression","Manual Coding"],0],
+["What does Clustering do?",["Groups similar objects","Deletes all data","Creates labels manually","Predicts a known answer"],0],
+["Which algorithm is commonly used for Clustering?",["K-means","Linear Regression","Naive Bayes","Decision Tree"],0],
+["What is an example of Clustering?",["Customer segmentation","Typing a password","Writing an email","Calculating a fixed formula"],0],
+["What is Dimension Reduction?",["Reducing features while keeping important information","Deleting the whole dataset","Adding more labels","Making data larger"],0],
+["Which is a Dimension Reduction method?",["PCA","K-means","Apriori","DBSCAN"],0],
+["Why is Dimension Reduction useful?",["It can make data easier to analyze and visualize","It always increases features","It removes every pattern","It requires labels for every object"],0],
+["What does Association Rule Learning find?",["Relationships between objects or events","Only image colors","Only numerical averages","Only predefined labels"],0],
+["Which is an example of an association rule?",["Bread → Butter","Cat → Dog","Red → Blue","Monday → Friday"],0],
+["Which algorithm is used for Association Rule Learning?",["Apriori","PCA","K-means","Mean-Shift"],0],
+["How can e-commerce use association rules?",["For product recommendations","To replace the website","To create passwords","To remove customer data"],0],
+["Which statement is TRUE about Unsupervised Learning?",["It works with unlabeled data","It always needs a teacher-provided answer","It can only analyze images","It cannot find patterns"],0],
+["Which three methods are discussed?",["Clustering, Dimension Reduction, Association Rule Learning","Classification, Regression, Forecasting","PCA, CNN, RNN","Sorting, Searching, Coding"],0]
+];
+const quiz=document.getElementById("quiz");
+questions.forEach((q,i)=>{
+ let d=document.createElement("div");d.className="q";
+ d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`;
+ q[1].forEach((a,j)=>{
+  let b=document.createElement("button");b.textContent=a;
+  b.onclick=()=>{d.querySelectorAll("button").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");d.dataset.answer=j};
+  d.appendChild(b);
+ });quiz.appendChild(d);
+});
+document.getElementById("submit").onclick=()=>{
+ let score=0;document.querySelectorAll(".q").forEach((d,i)=>{
+  let bs=d.querySelectorAll("button"),ans=Number(d.dataset.answer);
+  bs.forEach((b,j)=>{b.classList.remove("correct","wrong");if(j===questions[i][2])b.classList.add("correct");});
+  if(ans===questions[i][2])score++; else if(!isNaN(ans))bs[ans].classList.add("wrong");
+ });
+ document.getElementById("result").textContent=`Your score: ${score} / ${questions.length}`;
+ window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"});
+};
+</script>
+</body></html>
